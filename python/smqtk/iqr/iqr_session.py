@@ -292,7 +292,6 @@ class IqrSession (SmqtkObject):
                 raise RuntimeError("Did not find at least one positive "
                                    "adjudication.")
 
-            self.rel_index.use_libsvm = True
             rank_and_feedback_maps = self.rel_index.rank(pos, neg)
             element_probability_map = rank_and_feedback_maps["rank_pool"]
             self.feedback_map = rank_and_feedback_maps["feedback_pool"]

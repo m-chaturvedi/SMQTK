@@ -248,8 +248,13 @@ class LibSvmHikRelevancyIndex (RelevancyIndex):
         # method (_test_simple_iqr_helper) for this implementation as well.
 
         ind_sorted_by_distance = numpy.argsort(d_for_unlabelled)
-        rank_pool = dict(zip(self._descr_cache,
-                             [p[1] for p in predicted_probs]))
+        # https://github.com/cjlin1/libsvm/blob/88a1881f03ca139beff93170d7e6f36477fabe54/python/README#L310
+        # The order of the probabilities is in the order of the labels.
+        # And we are looking at +1.
+
+        rank_pool = dict(zip(self._descr_cache, [
+            p[self.svm_model.get_labels().index(+1)] for p in predicted_probs
+        ]))
 
         feedback_pool = collections.OrderedDict()
         for i in ind_sorted_by_distance:
