@@ -52,7 +52,11 @@ def svm_save_model(model_file_name, model):
 
 	Save a LIBSVM model to the file model_file_name.
 	"""
-	libsvm.svm_save_model(model_file_name, model)
+
+	# libsvm.svm_save_model(model_file_name, model)
+	# To work with Python 3 but not with Python 2.7
+	# Similar issue: https://github.com/pjreddie/darknet/issues/241
+	libsvm.svm_save_model(bytes(model_file_name, encoding='utf-8'), model)
 
 def evaluations(ty, pv):
 	"""
